@@ -5,8 +5,8 @@ services:
     image: jenkins/jenkins:lts
     container_name: jenkins
     ports:
-      - '8081:8080'
-      - '50001:50000' 
+      - '8080:8081'
+      - '50000:50001'
     volumes:
       - C:/docker/jenkins:/var/jenkins_home
     restart: unless-stopped
