@@ -1,9 +1,23 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Checkout Code') {
+            agent any
             steps {
-                echo 'Building...'
+                git branch: 'source', url:'https://github.com/sofiane1234/cicd_perso.git'
+                sh 'ls -R ${WORKSPACE}'
+                stash name: 'source-code', includes: '**'
+            }
+        }
+        stage('Build') {
+
+            agent {
+                label 'perso-docker-agent-python'
+            }
+            steps {
+                unstash 'source-code'
+                sh 'ls -R ${WORKSPACE}'
+                sh 'pip install -r back/requirements.txt'
             }
         }
 
